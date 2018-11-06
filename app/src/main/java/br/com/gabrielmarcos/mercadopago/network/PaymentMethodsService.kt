@@ -18,7 +18,7 @@ class PaymentMethodsService(context: Context): BaseService(context) {
     }
 
     fun getPaymentsMethods(successCallBack: (response: ArrayList<PaymentsModel>) -> Unit,
-                           errorCallback: () -> Unit) {
+                           errorCallback: (error: String) -> Unit) {
         observable = paymentsMethods.getPaymentMethods(BuildConfig.PUBLIC_KEY)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -26,8 +26,8 @@ class PaymentMethodsService(context: Context): BaseService(context) {
                 { response ->
                     successCallBack(response)
                 },
-                { _ ->
-                    errorCallback()
+                { error ->
+                    errorCallback(error.toString())
                 })
     }
 
