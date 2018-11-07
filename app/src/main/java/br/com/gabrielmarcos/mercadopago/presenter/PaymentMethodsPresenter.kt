@@ -17,6 +17,7 @@ class PaymentMethodsPresenter(private val paymentMethodsViewContract: PaymentMet
 
         paymentMethodsService!!.getPaymentsMethods({
             paymentMethodsViewContract.setData(it)
+
         },{
             paymentMethodsViewContract.setDataError(it)
         })
