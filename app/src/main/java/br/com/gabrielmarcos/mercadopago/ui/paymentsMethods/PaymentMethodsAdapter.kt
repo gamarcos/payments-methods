@@ -8,8 +8,8 @@ import br.com.gabrielmarcos.mercadopago.utils.RadioAdapter
 /**
  * Created by Gabriel Marcos on 05/11/2018
  */
-class PaymentMethodsAdapter(context: Context,
-                            paymentsMethods: ArrayList<PaymentsModel>): RadioAdapter<PaymentsModel>(context, paymentsMethods) {
+class PaymentMethodsAdapter(context: Context, paymentsMethods: ArrayList<PaymentsModel>, listener: RadioAdapterListener):
+    RadioAdapter<PaymentsModel>(context, paymentsMethods, listener) {
 
     private var picassoServiceHelper = PicassoServiceHelper(context)
 

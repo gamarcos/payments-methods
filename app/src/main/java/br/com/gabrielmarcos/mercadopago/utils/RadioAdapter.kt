@@ -15,9 +15,13 @@ import android.widget.TextView
  * Created by Gabriel Marcos on 06/11/2018.
  */
 
-abstract class RadioAdapter<T>(private val mContext: Context, var mItems: ArrayList<T>): RecyclerView.Adapter<RadioAdapter<T>.ViewHolder>() {
+abstract class RadioAdapter<T>(private val mContext: Context, var mItems: ArrayList<T>, var listener: RadioAdapter.RadioAdapterListener): RecyclerView.Adapter<RadioAdapter<T>.ViewHolder>() {
 
     var mSelectedItem = -1
+
+    interface RadioAdapterListener {
+        fun radioChange(index: Int)
+    }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
         viewHolder.mRadio.isChecked = i == mSelectedItem
@@ -30,10 +34,10 @@ abstract class RadioAdapter<T>(private val mContext: Context, var mItems: ArrayL
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val inflater = LayoutInflater.from(mContext)
         val view = inflater.inflate(R.layout.adapter_methods_payment, viewGroup, false)
-        return ViewHolder(view)
+        return ViewHolder(view, listener)
     }
 
-    inner class ViewHolder(inflate: View) : RecyclerView.ViewHolder(inflate) {
+    inner class ViewHolder(inflate: View, listener: RadioAdapter.RadioAdapterListener) : RecyclerView.ViewHolder(inflate) {
 
         var mRadio: RadioButton = inflate.findViewById<View>(R.id.paymentMethodsRadio) as RadioButton
         var mText: TextView = inflate.findViewById<View>(R.id.paymentMethodsTitle) as TextView
@@ -43,6 +47,7 @@ abstract class RadioAdapter<T>(private val mContext: Context, var mItems: ArrayL
             val clickListener = View.OnClickListener {
                 mSelectedItem = adapterPosition
                 notifyItemRangeChanged(0, mItems.size)
+                listener.radioChange(mSelectedItem)
             }
             itemView.setOnClickListener(clickListener)
             mRadio.setOnClickListener(clickListener)

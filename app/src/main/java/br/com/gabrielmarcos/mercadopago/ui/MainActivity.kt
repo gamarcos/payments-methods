@@ -2,48 +2,47 @@ package br.com.gabrielmarcos.mercadopago.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v4.app.Fragment
 import br.com.gabrielmarcos.mercadopago.R
-import br.com.gabrielmarcos.mercadopago.models.PaymentsModel
-import br.com.gabrielmarcos.mercadopago.presenter.PaymentMethodsPresenter
-import br.com.gabrielmarcos.mercadopago.ui.paymentsMethods.PaymentMethodsAdapter
-import br.com.gabrielmarcos.mercadopago.ui.paymentsMethods.PaymentMethodsViewContract
+import br.com.gabrielmarcos.mercadopago.ui.paymentsMethods.PaymentMethodsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(),
-    PaymentMethodsViewContract {
+class MainActivity : AppCompatActivity() {
 
-    private lateinit var paymentMethodsPresenter: PaymentMethodsPresenter
+    private var currentPage = 0
+    private var fragments: ArrayList<Fragment> = arrayListOf(PaymentMethodsFragment())
+    private var tags = arrayListOf("Payments Methods")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        paymentMethodsPresenter = PaymentMethodsPresenter(this,this)
-
-        paymentMethodsPresenter.getPaymentsMethods()
-
+        loadFragment(currentPage)
         setupButtons()
     }
 
-    override fun showProgress() {}
-
-    override fun hideProgress() {}
-
-    override fun setDataError(strError: String) { print(strError) }
-
-    override fun setData(paymentMethods: ArrayList<PaymentsModel>) {
-        setupListPaymentsMethods(paymentMethods)
-    }
-
-    private fun setupListPaymentsMethods(paymentMethods: ArrayList<PaymentsModel>) {
-        methodsPaymentList.adapter =
-                PaymentMethodsAdapter(this, paymentMethods)
-        methodsPaymentList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-    }
-
     private fun setupButtons() {
-        nextButton
+        nextButton.setOnClickListener {
+            if (currentPage <= fragments.size) {
+                loadFragment(currentPage++)
+            } else {
+                finish()
+            }
+
+        }
+    }
+
+    private fun loadFragment(index: Int): Boolean {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+
+        if (supportFragmentManager.findFragmentByTag(tags[index]) == null) {
+            fragmentTransaction.add(R.id.basePayments, fragments[index])
+        }
+
+        fragmentTransaction.show(fragments[index])
+        fragmentTransaction.commit()
+
+        return true
     }
 
 }
