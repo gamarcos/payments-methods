@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="button_dialog_height">48dp</dimen>
+  <dimen name="button_horizontal_margin">15dp</dimen>
+  <dimen name="button_bottom_margin">16dp</dimen>
+  
+  <!-- Dialog -->
+  <dimen name="dialog_title_margin">27dp</dimen>
+  <dimen name="dialog_description_margin_top">20dp</dimen>
+  <dimen name="dialog_button_margin_top">20dp</dimen>
+  
+  <dimen name="dialog_title_size">18sp</dimen>
+  <dimen name="dialog_description_size">15sp</dimen>
+</resources>
