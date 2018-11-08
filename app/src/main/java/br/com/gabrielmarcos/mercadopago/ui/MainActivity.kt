@@ -21,31 +21,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var currentPage = 0
-    private var fragments: ArrayList<Fragment> = arrayListOf(PaymentMethodsFragment(), BanksAcceptedFragment(), RecommendationFragment())
-    private var tags = arrayListOf("Payments Methods", "Banks", "Recommendations")
+    private var fragmentsList: ArrayList<Fragment> = arrayListOf(PaymentMethodsFragment(), BanksAcceptedFragment(), RecommendationFragment())
+    private var tagsList = arrayListOf("Payments Methods", "Banks", "Recommendations")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        loadFragment(currentPage)
+        loadFragment(0)
         setupButtons()
     }
 
     private fun setupButtons() {
         nextButton.setOnClickListener {
-            if (currentPage < fragments.size-1) {
-                currentPage++
-                loadFragment(currentPage)
-            } else {
-                currentPage = 0
-                loadFragment(currentPage)
+            when (currentPage) {
+                0 -> loadFragment(1)
+                1 -> loadFragment(2)
+                2 -> loadFragment(0)
             }
         }
     }
 
-    private fun changeButtonText() {
-        if (currentPage == fragments.size-1) {
+    private fun changeButtonText(position: Int) {
+        if (position == fragmentsList.size-1) {
             nextButton.text = getString(R.string.title_button_try_again)
         } else {
             nextButton.text = getString(R.string.title_button_next)
@@ -53,19 +51,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadFragment(index: Int): Boolean {
+        val fragment = fragmentsList[index]
+        val tag = tagsList[index]
+
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
-        if (supportFragmentManager.findFragmentByTag(tags[index]) == null) {
-            fragmentTransaction.add(R.id.basePayments, fragments[index])
+        if (supportFragmentManager.findFragmentByTag(tag) == null) {
+            fragmentTransaction.add(R.id.basePayments, fragment, tag)
         }
 
-        if (currentPage != 0) {
-            fragmentTransaction.detach(fragments[currentPage-1])
+        if (index != 0) {
+            fragmentTransaction.remove(fragmentsList[currentPage])
+        } else {
+            fragmentTransaction.remove(fragmentsList[fragmentsList.size-1])
         }
 
-        fragmentTransaction.show(fragments[index])
+        fragmentTransaction.hide(fragmentsList[currentPage])
+        fragmentTransaction.show(fragment)
         fragmentTransaction.commit()
-        changeButtonText()
+        changeButtonText(index)
+
+        currentPage = index
 
         return true
     }
