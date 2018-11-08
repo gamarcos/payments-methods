@@ -11,6 +11,10 @@ import br.com.gabrielmarcos.mercadopago.ui.recommendation.RecommendationContract
 class RecommendationPresenter(private val recommendationContractView: RecommendationContractView,
                               private val context: Context) {
 
+    init {
+        recommendationContractView.showProgress()
+    }
+
     var recommendationService: RecommendationService? = null
 
     fun getPaymentsMethods(amount: String,
@@ -21,8 +25,10 @@ class RecommendationPresenter(private val recommendationContractView: Recommenda
 
         recommendationService!!.getPaymentsMethods(amount, paymentMethod, issuer, {
             recommendationContractView.setData(it.first().payerCosts)
+            recommendationContractView.hideProgress()
         },{
             recommendationContractView.setDataError(it)
+            recommendationContractView.hideProgress()
         })
     }
 }

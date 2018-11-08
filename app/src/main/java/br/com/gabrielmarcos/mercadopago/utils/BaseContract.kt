@@ -8,4 +8,5 @@ interface BaseContract {
     fun setDataError(strError: String)
     fun showProgress()
     fun hideProgress()
+    fun validateFields(): Boolean
 }

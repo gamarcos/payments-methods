@@ -10,6 +10,11 @@ import br.com.gabrielmarcos.mercadopago.ui.banksAccepted.BanksAcceptedViewContra
 
 class BanksAcceptedPresenter(private val banksAcceptedViewContract: BanksAcceptedViewContract,
                              private val context: Context) {
+
+    init {
+        banksAcceptedViewContract.showProgress()
+    }
+
     var bankService: BanksAcceptedService? = null
 
     fun getBankList(bankId: String) {
@@ -18,8 +23,10 @@ class BanksAcceptedPresenter(private val banksAcceptedViewContract: BanksAccepte
 
         bankService!!.getBankList(bankId, {
             banksAcceptedViewContract.setData(it)
+            banksAcceptedViewContract.hideProgress()
         }, {
             banksAcceptedViewContract.setDataError(it)
+            banksAcceptedViewContract.hideProgress()
         })
     }
 }

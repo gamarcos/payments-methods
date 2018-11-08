@@ -21,6 +21,8 @@ import kotlinx.android.synthetic.main.fragment_banks.*
  */
 class BanksAcceptedFragment: Fragment(), BanksAcceptedViewContract , RadioAdapter.RadioAdapterListener {
 
+    private var bankSelected = ""
+
     private lateinit var banksAcceptedPresenter: BanksAcceptedPresenter
     private lateinit var banckList: ArrayList<BankModel>
 
@@ -43,17 +45,25 @@ class BanksAcceptedFragment: Fragment(), BanksAcceptedViewContract , RadioAdapte
         } else {
             setupAdapter()
         }
-
     }
 
     override fun setDataError(strError: String) {}
 
-    override fun showProgress() {}
+    override fun showProgress() {
+        (activity as MainActivity).showProgress()
+    }
 
-    override fun hideProgress() {}
+    override fun hideProgress() {
+        (activity as MainActivity).hideProgress()
+    }
 
     override fun radioChange(index: Int) {
-        MainActivity.bank = banckList[index].id
+        bankSelected = banckList[index].id
+        MainActivity.bank = bankSelected
+    }
+
+    override fun validateFields(): Boolean {
+        return bankSelected.isNotBlank()
     }
 
     private fun setupAdapter() {

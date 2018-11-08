@@ -29,7 +29,6 @@ class RecommendationFragment: Fragment(), RecommendationContractView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         recommendationPresenter = RecommendationPresenter(this@RecommendationFragment, context!!)
 
         recommendationPresenter.getPaymentsMethods(MainActivity.amount, MainActivity.banner, MainActivity.bank)
@@ -49,9 +48,17 @@ class RecommendationFragment: Fragment(), RecommendationContractView {
         Toast.makeText(context, strError, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showProgress() {}
+    override fun showProgress() {
+        (activity as MainActivity).showProgress()
+    }
 
-    override fun hideProgress() {}
+    override fun hideProgress() {
+        (activity as MainActivity).hideProgress()
+    }
+
+    override fun validateFields(): Boolean {
+        return true
+    }
 
     private fun setupAdapter() {
         recommendationsRecyclerView.adapter = RecommendationAdapter(context!!, recommendationsList)

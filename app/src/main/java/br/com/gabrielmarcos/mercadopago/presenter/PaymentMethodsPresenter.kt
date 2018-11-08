@@ -10,6 +10,10 @@ import br.com.gabrielmarcos.mercadopago.network.PaymentMethodsService
 class PaymentMethodsPresenter(private val paymentMethodsViewContract: PaymentMethodsViewContract,
                               private val context: Context) {
 
+    init {
+        paymentMethodsViewContract.showProgress()
+    }
+
     var paymentMethodsService: PaymentMethodsService? = null
 
     fun getPaymentsMethods() {
@@ -17,9 +21,11 @@ class PaymentMethodsPresenter(private val paymentMethodsViewContract: PaymentMet
 
         paymentMethodsService!!.getPaymentsMethods({
             paymentMethodsViewContract.setData(it)
+            paymentMethodsViewContract.hideProgress()
 
         },{
             paymentMethodsViewContract.setDataError(it)
+            paymentMethodsViewContract.hideProgress()
         })
     }
 }

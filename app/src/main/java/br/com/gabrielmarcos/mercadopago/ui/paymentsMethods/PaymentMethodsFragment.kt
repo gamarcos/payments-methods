@@ -28,6 +28,8 @@ import java.text.DecimalFormat
 
 class PaymentMethodsFragment: Fragment(), PaymentMethodsViewContract, RadioAdapter.RadioAdapterListener {
 
+    private var bannerSelected = ""
+
     private lateinit var paymentMethodsPresenter: PaymentMethodsPresenter
     private lateinit var paymentMethodsList: ArrayList<PaymentsModel>
 
@@ -58,12 +60,21 @@ class PaymentMethodsFragment: Fragment(), PaymentMethodsViewContract, RadioAdapt
         Toast.makeText(context, strError, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showProgress() {}
+    override fun showProgress() {
+        (activity as MainActivity).showProgress()
+    }
 
-    override fun hideProgress() {}
+    override fun hideProgress() {
+        (activity as MainActivity).hideProgress()
+    }
 
     override fun radioChange(index: Int) {
-        MainActivity.banner = paymentMethodsList[index].id
+        bannerSelected = paymentMethodsList[index].id
+        MainActivity.banner = bannerSelected
+    }
+
+    override fun validateFields(): Boolean {
+        return bannerSelected.isNotBlank() && amountValueEdt.text.toString().isNotBlank()
     }
 
     private fun setupView() {

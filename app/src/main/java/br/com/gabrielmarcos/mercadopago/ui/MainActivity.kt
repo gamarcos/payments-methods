@@ -3,6 +3,7 @@ package br.com.gabrielmarcos.mercadopago.ui
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.View
 import br.com.gabrielmarcos.mercadopago.R
 import br.com.gabrielmarcos.mercadopago.models.AmountToPayModel
 import br.com.gabrielmarcos.mercadopago.ui.banksAccepted.BanksAcceptedFragment
@@ -34,10 +35,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupButtons() {
         nextButton.setOnClickListener {
-            when (currentPage) {
-                0 -> loadFragment(1)
-                1 -> loadFragment(2)
-                2 -> loadFragment(0)
+            if ((fragmentsList[currentPage] as BaseContract).validateFields()) {
+                when (currentPage) {
+                    0 -> loadFragment(1)
+                    1 -> loadFragment(2)
+                    2 -> loadFragment(0)
+                }
+            } else {
+                //TODO: Make a Dialog
             }
         }
     }
@@ -74,6 +79,14 @@ class MainActivity : AppCompatActivity() {
         currentPage = index
 
         return true
+    }
+
+    fun showProgress() {
+        progressIndicator.visibility = View.VISIBLE
+    }
+
+    fun hideProgress() {
+        progressIndicator.visibility = View.GONE
     }
 
 }
