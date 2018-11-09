@@ -3,17 +3,17 @@ package br.com.gabrielmarcos.mercadopago.ui.banksAccepted
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import br.com.gabrielmarcos.mercadopago.R
 import br.com.gabrielmarcos.mercadopago.models.BankModel
 import br.com.gabrielmarcos.mercadopago.presenter.BanksAcceptedPresenter
+import br.com.gabrielmarcos.mercadopago.presenter.MainPresenter
 import br.com.gabrielmarcos.mercadopago.ui.MainActivity
+import br.com.gabrielmarcos.mercadopago.utils.Constants
 import br.com.gabrielmarcos.mercadopago.utils.RadioAdapter
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.adapter_methods_payment.*
 import kotlinx.android.synthetic.main.fragment_banks.*
 
 /**
@@ -23,6 +23,7 @@ class BanksAcceptedFragment: Fragment(), BanksAcceptedViewContract , RadioAdapte
 
     private var bankSelected = ""
 
+    private lateinit var mainPresenter: MainPresenter
     private lateinit var banksAcceptedPresenter: BanksAcceptedPresenter
     private lateinit var banckList: ArrayList<BankModel>
 
@@ -33,37 +34,41 @@ class BanksAcceptedFragment: Fragment(), BanksAcceptedViewContract , RadioAdapte
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mainPresenter = MainPresenter(activity as MainActivity)
+
         banksAcceptedPresenter = BanksAcceptedPresenter(this, context!!)
 
-        banksAcceptedPresenter.getBankList(MainActivity.banner)
+        banksAcceptedPresenter.getBankList(mainPresenter.getBanner())
     }
 
     override fun setData(paymentMethods: ArrayList<BankModel>) {
         banckList = paymentMethods
-        if (banckList.isEmpty()) {
-            setDataError("Não foi possivel encontrar nenhum banco no momento, tente mais tarde")
-        } else {
-            setupAdapter()
-        }
+        setupAdapter()
     }
 
-    override fun setDataError(strError: String) {}
+    override fun setDataError(strError: String) {
+        Log.d(Constants.ERROR_REQUEST, strError)
+    }
 
     override fun showProgress() {
-        (activity as MainActivity).showProgress()
+        mainPresenter.showProgress()
     }
 
     override fun hideProgress() {
-        (activity as MainActivity).hideProgress()
+        mainPresenter.hideProgress()
     }
 
     override fun radioChange(index: Int) {
         bankSelected = banckList[index].id
-        MainActivity.bank = bankSelected
+        mainPresenter.setBank(bankSelected)
     }
 
     override fun validateFields(): Boolean {
         return bankSelected.isNotBlank()
+    }
+
+    override fun showDialog(message: String) {
+        mainPresenter.showDialog(message)
     }
 
     private fun setupAdapter() {

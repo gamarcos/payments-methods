@@ -1,6 +1,5 @@
 package br.com.gabrielmarcos.mercadopago.ui.recommendation
 
-import br.com.gabrielmarcos.mercadopago.models.RecommendationsModel
 import br.com.gabrielmarcos.mercadopago.models.RecommendedMessageModel
 import br.com.gabrielmarcos.mercadopago.utils.BaseContract
 

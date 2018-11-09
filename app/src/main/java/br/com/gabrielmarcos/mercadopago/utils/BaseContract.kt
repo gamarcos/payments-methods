@@ -9,4 +9,5 @@ interface BaseContract {
     fun showProgress()
     fun hideProgress()
     fun validateFields(): Boolean
+    fun showDialog(message: String)
 }
