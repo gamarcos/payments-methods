@@ -1,6 +1,7 @@
 package br.com.gabrielmarcos.mercadopago.presenter
 
 import android.content.Context
+import br.com.gabrielmarcos.mercadopago.R
 import br.com.gabrielmarcos.mercadopago.models.BankModel
 import br.com.gabrielmarcos.mercadopago.network.BanksAcceptedService
 import br.com.gabrielmarcos.mercadopago.ui.banksAccepted.BanksAcceptedViewContract
@@ -28,13 +29,13 @@ class BanksAcceptedPresenter(private val banksAcceptedViewContract: BanksAccepte
         }, {
             banksAcceptedViewContract.setDataError(it)
             banksAcceptedViewContract.hideProgress()
-            banksAcceptedViewContract.showDialog(it)
+            banksAcceptedViewContract.showDialog(context.getString(R.string.dialog_default_error))
         })
     }
 
     private fun validateRequest(banks: ArrayList<BankModel>) {
         if (banks.isEmpty()) {
-            banksAcceptedViewContract.showDialog("Não foi possivel encontrar nenhum banco no momento, tente mais tarde")
+            banksAcceptedViewContract.showDialog(context.getString(R.string.dialog_not_found_bank))
         }
     }
 }

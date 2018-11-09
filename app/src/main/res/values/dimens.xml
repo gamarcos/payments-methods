@@ -4,6 +4,22 @@
   <dimen name="button_horizontal_margin">15dp</dimen>
   <dimen name="button_bottom_margin">16dp</dimen>
   
+  <!--Commom-->
+  <dimen name="margin_content_8">8dp</dimen>
+  
+  <!--MainActivity-->
+  <dimen name="main_height_button">50dp</dimen>
+  <dimen name="main_margin_button">8dp</dimen>
+  <dimen name="main_size_progress">50dp</dimen>
+  
+  
+  <!--Recommendation-->
+  
+  <dimen name="recommendation_cardview_height">70dp</dimen>
+  <dimen name="recommendation_cardview_elevation">5dp</dimen>
+  <dimen name="recommendation_cardview_radius">5dp</dimen>
+  <dimen name="recommendation_cardview_margin">8dp</dimen>
+  
   <!-- Dialog -->
   <dimen name="dialog_title_margin">27dp</dimen>
   <dimen name="dialog_description_margin_top">20dp</dimen>
@@ -11,4 +27,6 @@
   
   <dimen name="dialog_title_size">18sp</dimen>
   <dimen name="dialog_description_size">15sp</dimen>
+  
+  
 </resources>

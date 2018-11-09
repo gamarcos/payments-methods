@@ -1,6 +1,7 @@
 package br.com.gabrielmarcos.mercadopago.presenter
 
 import android.content.Context
+import br.com.gabrielmarcos.mercadopago.R
 import br.com.gabrielmarcos.mercadopago.models.PaymentsModel
 import br.com.gabrielmarcos.mercadopago.models.RecommendationsModel
 import br.com.gabrielmarcos.mercadopago.network.RecommendationService
@@ -32,13 +33,13 @@ class RecommendationPresenter(private val recommendationContractView: Recommenda
         },{
             recommendationContractView.setDataError(it)
             recommendationContractView.hideProgress()
-            recommendationContractView.showDialog(it)
+            recommendationContractView.showDialog(context.getString(R.string.dialog_default_error))
         })
     }
 
     private fun validateRequest(recommendations: ArrayList<RecommendationsModel>) {
         if (recommendations.isEmpty()) {
-            recommendationContractView.showDialog("Não foi possivel encontrar nenhuma bandeira de pagamento no momento, tente mais tarde!")
+            recommendationContractView.showDialog(context.getString(R.string.dialog_not_found_recommendation))
         }
     }
 }

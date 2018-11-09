@@ -7,14 +7,12 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.View
 import br.com.gabrielmarcos.mercadopago.R
-import br.com.gabrielmarcos.mercadopago.models.AmountToPayModel
 import br.com.gabrielmarcos.mercadopago.presenter.MainPresenter
 import br.com.gabrielmarcos.mercadopago.ui.banksAccepted.BanksAcceptedFragment
 import br.com.gabrielmarcos.mercadopago.ui.paymentsMethods.PaymentMethodsFragment
 import br.com.gabrielmarcos.mercadopago.ui.recommendation.RecommendationFragment
 import br.com.gabrielmarcos.mercadopago.utils.BaseContract
 import br.com.gabrielmarcos.mercadopago.utils.CustomViews
-import br.com.gabrielmarcos.mercadopago.utils.OnCommunicateInterface
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainViewContract {
@@ -78,9 +76,9 @@ class MainActivity : AppCompatActivity(), MainViewContract {
 
     override fun showDialog(message: String) {
         dialog = CustomViews.alertDialog(this,
-            "OPS!",
+            getString(R.string.dialog_title),
             message,
-            "OK",
+            getString(R.string.dialog_button_title),
             View.OnClickListener {
                 resetFragment()
                 dialog.dismiss()
@@ -138,7 +136,7 @@ class MainActivity : AppCompatActivity(), MainViewContract {
     }
 
     private fun showSnackBar() {
-        Snackbar.make(findViewById(R.id.mainActvitiy), "Replace with your own action", Snackbar.LENGTH_LONG)
+        Snackbar.make(findViewById(R.id.mainActvitiy), getString(R.string.snackbar_incomplete_form), Snackbar.LENGTH_LONG)
             .setAction("Action", null).show()
     }
 

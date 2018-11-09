@@ -1,6 +1,7 @@
 package br.com.gabrielmarcos.mercadopago.presenter
 
 import android.content.Context
+import br.com.gabrielmarcos.mercadopago.R
 import br.com.gabrielmarcos.mercadopago.models.BankModel
 import br.com.gabrielmarcos.mercadopago.models.PaymentsModel
 import br.com.gabrielmarcos.mercadopago.ui.paymentsMethods.PaymentMethodsViewContract
@@ -30,13 +31,13 @@ class PaymentMethodsPresenter(private val paymentMethodsViewContract: PaymentMet
         },{
             paymentMethodsViewContract.setDataError(it)
             paymentMethodsViewContract.hideProgress()
-            paymentMethodsViewContract.showDialog(it)
+            paymentMethodsViewContract.showDialog(context.getString(R.string.dialog_default_error))
         })
     }
 
     private fun validateRequest(paymentsMethods: ArrayList<PaymentsModel>) {
         if (paymentsMethods.isEmpty()) {
-            paymentMethodsViewContract.showDialog("Não foi possivel encontrar nenhuma bandeira de pagamento no momento, tente mais tarde!")
+            paymentMethodsViewContract.showDialog(context.getString(R.string.dialog_not_found_banner))
         }
     }
 }

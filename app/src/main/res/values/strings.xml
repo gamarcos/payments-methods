@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">MercadoPago</string>
     
-    
     <string name="amount_value_title">Digite o valor total a ser pago:</string>
     <string name="amount_value_credit_card">Selecione a bandeira de cartão desejada:</string>
     
@@ -9,5 +8,15 @@
     <string name="title_button_next">Proxímo</string>
     
     
+    <!--Dialog-->
+    <string name="dialog_title">OPS!</string>
+    <string name="dialog_button_title">OK</string>
+    <string name="dialog_not_found_bank">Não foi possivel encontrar nenhum banco no momento, tente mais tarde</string>
+    <string name="dialog_not_found_banner">Não foi possivel encontrar nenhuma bandeira de pagamento no momento, tente mais tarde!</string>
+    <string name="dialog_not_found_recommendation">Não foi possivel encontrar nenhuma recomendação de pagamento no momento, tente mais tarde!</string>
+    <string name="dialog_default_error">Algo deu errado, por favor tente mais tarde!</string>
+    
+    <!--Snack-->
+    <string name="snackbar_incomplete_form">Por favor, preencha todas as opções corretamente!</string>
     
 </resources>
